@@ -8,6 +8,6 @@ export const MainViewStyle = styled.div<MainViewStyleProps>`
   height: 100vh;
   background-color: ${(props) => (props.theme as CustomTheme).colors.primary80};
   display: flex;
-  justify-content: center;
-  align-items: center;
+  // justify-content: flex-end;
+  flex-direction: row;
 `;

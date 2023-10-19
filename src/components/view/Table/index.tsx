@@ -11,7 +11,7 @@ export const TableView = () => {
       for (let j = 0; j < cols; j++) {
         cells.push(
           <div key={`${i}-${j}`} className="cell">
-            <MineComponent isBettingStart={true} isBomb={true} />
+            <MineComponent isBettingStart={false} isBomb={true} />
           </div>
         );
       }
