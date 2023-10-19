@@ -26,7 +26,6 @@ const scaleAnimation = keyframes<MineComponentStyleProps>`
   100% {
     transform: scale(1);
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-    // background-image: url('bomb.svg');
     background-size: 5rem, 10rem;
     background-repeat: no-repeat, no-repeat;
     background-position: center, center;
@@ -69,7 +68,6 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   &.clicked-after {
     transform: scale(1);
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-    // background-image: url(${(props) => (props.isBomb ? 'bomb.svg' : 'jewel.svg')});
     background-size: 4.5rem;
     background-repeat: no-repeat;
     background-position: center;
@@ -87,7 +85,6 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   &.clicked-after-release {
     transform: scale(1);
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-    // background-image: url(${(props) => (props.isBomb ? 'bomb.svg' : 'jewel.svg')});
     background-size: 5rem;
     background-repeat: no-repeat;
     background-position: center;
