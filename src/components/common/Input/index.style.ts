@@ -34,6 +34,7 @@ export const StyledInput = styled.input<StyledInputProps>`
   border-width: 2px;
   border-bottom-left-radius: 0.25rem;
   border-top-left-radius: 0.25rem;
+  
   border-bottom-right-radius: ${(props) =>
     props.isInput ? '0.25rem' : '0rem'
   };

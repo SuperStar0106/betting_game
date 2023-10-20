@@ -4,6 +4,6 @@ export const LABEL = {
   GEMS: 'Gems',
   TOTAL_PROFIT: 'Total profit',
   BTC: 'BTC',
-  PICK: 'Pick random title',
+  PICK: 'Pick random tile',
   CASHOUT: 'Cashout',
 }

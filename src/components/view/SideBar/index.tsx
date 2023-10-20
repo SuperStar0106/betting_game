@@ -4,7 +4,7 @@ import {
   BetAmount,
   ItemCount,
 } from "./index.style";
-import { InputComponent, ButtonComponent } from "../../common";
+import { InputComponent, ButtonComponent, SelectComponent } from "../../common";
 import { TEXT } from "../../../consts";
 
 export const SideBarView = () => {
@@ -22,6 +22,12 @@ export const SideBarView = () => {
         <div className="betAmountBtn btnRadius">
           <ButtonComponent>2×</ButtonComponent>
         </div>
+      </BetAmount>
+      <InputLabel>
+        <label className="font-bg">{TEXT.LABEL.MINES}</label>
+      </InputLabel>
+      <BetAmount>
+        <SelectComponent></SelectComponent>
       </BetAmount>
       <ItemCount>
         <div className="count-div font-bg">
@@ -48,6 +54,14 @@ export const SideBarView = () => {
           </div>
         </div>
       </ItemCount>
+      <div className="pick-btn">
+        <ButtonComponent isDisable={false}>{TEXT.LABEL.PICK}</ButtonComponent>
+      </div>
+      <div className="cash-out-btn">
+        <ButtonComponent isDisable={false}>
+          {TEXT.LABEL.CASHOUT}
+        </ButtonComponent>
+      </div>
     </SideBarViewStyle>
   );
 };

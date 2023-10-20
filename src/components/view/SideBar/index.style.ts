@@ -20,6 +20,24 @@ export const SideBarViewStyle = styled.div`
     font-size: ${(props) => (props.theme as CustomTheme).fontSizes.sm};
     line-height: 1.25rem;
   }
+
+  .pick-btn {
+    height: 2.75rem;
+    margin-bottom: 0.75rem;
+
+    & button {
+      border-radius: 0.25rem;
+    }
+  }
+
+  .cash-out-btn {
+    height: 3.5rem;
+
+    & button {
+      background-color: ${(props) => (props.theme as CustomTheme).colors.btnCashOutColor};
+      border-radius: 0.25rem;
+    }
+  }
 `;
 
 export const InputLabel = styled.div`
@@ -34,6 +52,10 @@ export const BetAmount = styled.div`
 
   .betAmountBtn {
     width: 3.5rem;
+
+    & button {
+      border-radius: none;
+    }
 
     &.btnRadius button {
       border-bottom-right-radius: 0.25rem;
@@ -57,14 +79,12 @@ export const ItemCount = styled.div`
   display: flex;
   width: 100%;
   gap: 0.5rem;
+  margin-bottom: 0.75rem;
 
   .count-div {
     display: flex;
     width: 100%;
     flex-direction: column;
-    & div {
-      margin-bottom: 0.75rem;
-    }
   }
 
   & label {

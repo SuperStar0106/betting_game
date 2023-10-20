@@ -16,6 +16,7 @@ export const ButtonComponentStyle = styled.button<ButtonComponentStyleProps>`
   background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
   border: none;
   transition-duration: 0.2s;
+  padding: 0.625rem;
 
   &:hover {
     background-color: ${(props) => (props.theme as CustomTheme).colors.btnClickBackColor};
@@ -25,4 +26,9 @@ export const ButtonComponentStyle = styled.button<ButtonComponentStyleProps>`
 export const ButtonText = styled.span`
   color: ${(props) => (props.theme as CustomTheme).colors.white};
   font-size: ${(props) => (props.theme as CustomTheme).fontSizes.bg};
+  transition-duration: 0.2s;
+
+  &.button-text-animation {
+    transform: scale(0.8);
+  }
 `;
