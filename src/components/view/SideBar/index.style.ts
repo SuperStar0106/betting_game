@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CustomTheme } from "../../../styles/type";
 
 export const SideBarViewStyle = styled.div`
-  width: 298px;
+  width: 24rem;
   height: 100vh;
   background-color: ${(props) => (props.theme as CustomTheme).colors.primary40};
   font-size: ${(props) => (props.theme as CustomTheme).fontSizes.bg};

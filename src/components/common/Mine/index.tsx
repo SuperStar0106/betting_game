@@ -17,7 +17,7 @@ export const MineComponent: React.FC<MineComponentProps> = ({
   const img = isBomb ? "bomb.svg" : "jewel.svg";
 
   const handleMouseUp = () => {
-    setClickCount((prevCount) => prevCount + 1);
+    isBettingStart && setClickCount((prevCount) => prevCount + 1);
     setIsRelease(true);
     buttonRef.current?.classList.remove("clicked-release", "clicked");
   };

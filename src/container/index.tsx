@@ -1,5 +1,1 @@
-import { MainView } from "../components/view";
-
-export const MainContainer = () => {
-  return <MainView />;
-}
+export * from "./Main";

@@ -9,4 +9,11 @@ export const MainViewStyle = styled.div<MainViewStyleProps>`
   background-color: ${(props) => (props.theme as CustomTheme).colors.primary80};
   display: flex;
   flex-direction: row;
+
+  .table-div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
 `;

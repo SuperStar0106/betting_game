@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   SideBarViewStyle,
   InputLabel,
@@ -8,8 +8,13 @@ import {
 import { InputComponent, ButtonComponent, SelectComponent } from "../../common";
 import { TEXT, IMAGE } from "../../../consts";
 
-export const SideBarView = () => {
-  const [isStart, setIsStart] = useState<boolean>(false);
+type SideBarViewProps = {
+  handleStart: (bombCount: number) => void;
+  isStart: boolean;
+};
+
+export const SideBarView = (props: SideBarViewProps) => {
+  const { handleStart, isStart } = props;
 
   return (
     <SideBarViewStyle>
@@ -33,7 +38,7 @@ export const SideBarView = () => {
             <label className="font-bg">{TEXT.LABEL.MINES}</label>
           </InputLabel>
           <BetAmount>
-            <SelectComponent></SelectComponent>
+            <SelectComponent onChange={handleStart} />
           </BetAmount>
         </div>
       )}
@@ -77,7 +82,7 @@ export const SideBarView = () => {
         <ButtonComponent
           type="cash_out"
           isDisable={false}
-          onClick={() => setIsStart(true)}
+          onClick={() => handleStart(3)}
         >
           {isStart ? TEXT.LABEL.CASHOUT : TEXT.LABEL.BET}
         </ButtonComponent>
