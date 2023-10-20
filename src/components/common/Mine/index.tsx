@@ -4,12 +4,23 @@ import { MineComponentStyle } from "./index.style";
 type MineComponentProps = {
   isBettingStart: boolean;
   isBomb: boolean;
+  isBombExplosion: boolean;
+  handleSetBombExplotion: () => void;
+  handleAddOpenCards: (id: number) => void;
+  cardId: number;
+  openCards: Array<number>;
 };
 
-export const MineComponent: React.FC<MineComponentProps> = ({
-  isBettingStart,
-  isBomb,
-}) => {
+export const MineComponent: React.FC<MineComponentProps> = (props) => {
+  const {
+    isBettingStart,
+    isBomb,
+    isBombExplosion,
+    handleSetBombExplotion,
+    handleAddOpenCards,
+    cardId,
+    openCards,
+  } = props;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [clickCount, setClickCount] = useState<number>(0);
   const [isRelease, setIsRelease] = useState<boolean>(false);
@@ -17,9 +28,12 @@ export const MineComponent: React.FC<MineComponentProps> = ({
   const img = isBomb ? "bomb.svg" : "jewel.svg";
 
   const handleMouseUp = () => {
+    isBettingStart && isBomb && handleSetBombExplotion();
     isBettingStart && setClickCount((prevCount) => prevCount + 1);
     setIsRelease(true);
-    buttonRef.current?.classList.remove("clicked-release", "clicked");
+    isBettingStart &&
+      buttonRef.current?.classList.remove("clicked-release", "clicked");
+    isBettingStart && handleAddOpenCards(cardId);
   };
 
   const handleMouseDown = () => {
@@ -47,6 +61,7 @@ export const MineComponent: React.FC<MineComponentProps> = ({
 
     if (clickCount === 1 && isBettingStart) {
       buttonRef.current?.classList.add("clicked");
+      isBombExplosion && buttonRef.current?.classList.add("explosion");
     } else if (clickCount > 1 && !isRelease) {
       if (isBettingStart) {
         buttonRef.current?.classList.add("clicked-after");
@@ -56,11 +71,11 @@ export const MineComponent: React.FC<MineComponentProps> = ({
     } else if (clickCount > 1 && isRelease && isBettingStart) {
       buttonRef.current?.classList.add("clicked-after-release");
     }
-
-    console.log("classList: ", buttonRef.current?.classList);
-    console.log("clickCount: ", clickCount);
-    console.log("isRelease: ", isRelease);
   }, [clickCount, isRelease, isBettingStart]);
+
+  useEffect(() => {
+    isBettingStart && setClickCount((prevCount) => prevCount + 1);
+  }, [isBombExplosion]);
 
   return (
     <MineComponentStyle
@@ -71,6 +86,7 @@ export const MineComponent: React.FC<MineComponentProps> = ({
       onMouseLeave={handleMouseOverLeave}
       isBomb={true}
       isShowImg={clickCount !== 0 && isBettingStart}
+      isBombExplosion={isBombExplosion && openCards.includes(cardId)}
     >
       {isBomb && (
         <img src="explosion.gif" alt="" className="back-img explosion" />

@@ -27,10 +27,6 @@ export const ButtonComponent: React.FC<Partial<ButtonComponentProps>> = ({
     buttonTextRef.current?.classList.remove("button-text-animation");
   };
 
-  useEffect(() => {
-    console.log("button text class: ", buttonTextRef.current?.classList);
-  }, [buttonTextRef]);
-
   return (
     <ButtonComponentStyle
       isDisable={isDisable}

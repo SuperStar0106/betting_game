@@ -4,6 +4,7 @@ import { CustomTheme } from '../../../styles/type';
 type MineComponentStyleProps = {
   isBomb: boolean;
   isShowImg: boolean;
+  isBombExplosion: boolean;
 };
 
 const scaleAnimation = keyframes<MineComponentStyleProps>`
@@ -63,6 +64,17 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   &.clicked {
     animation: ${scaleAnimation} 1.0s forwards;
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+  }
+
+  &.explosion {
+    & > .back-img {
+      transform: ${(props) => !props.isBombExplosion ? 'scale(0.7)' : 'scale(1)'};
+      opacity: ${(props) => !props.isBombExplosion ? '0.5' : '1'};
+
+      &.explosion {
+        display: ${(props) => !props.isBombExplosion ? 'none' : 'flex'};
+      }
+    }
   }
 
   &.clicked-after {

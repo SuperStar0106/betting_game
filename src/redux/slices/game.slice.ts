@@ -5,11 +5,15 @@ import { GameUtil } from "../../utils";
 type gameState = {
   isStart: boolean;
   mines: Array<boolean>;
+  openCards: Array<number>;
+  isBombExplosion: boolean;
 };
 
 const initialState: gameState = {
   isStart: false,
   mines: [],
+  openCards: [],
+  isBombExplosion: false,
 };
 
 const gameSlice = createSlice({
@@ -19,7 +23,16 @@ const gameSlice = createSlice({
     setTableValues(state: gameState, action: PayloadAction<AppActionTypes.Game.ISetTableValuesAction>) {
       state.isStart = true;
       const mines = GameUtil.makebombArray(action.payload.bombCount);
-      state.mines = { ...mines };
+      state.mines = [...mines];
+    },
+    addOpenCards(state: gameState, action: PayloadAction<AppActionTypes.Game.IAddOpenCardsAction>) {
+      const id = action.payload.id;
+      if (!state.openCards.includes(id)) {
+        state.openCards.push(id);
+      }
+    },
+    setBombExplostion(state: gameState) {
+      state.isBombExplosion = true;
     },
   },
 });
