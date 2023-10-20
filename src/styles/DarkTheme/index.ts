@@ -7,6 +7,12 @@ const themeColors = {
     primary60: '#2f4553',
     primary80: '#0f212e',
 
+    textColor: '#b1bad3',
+    btnClickBackColor: '#3d5564',
+    btnCashOutColor00: '#00e701',
+    btnCashOutColor10: '#1fff20',
+    btnCashOutColor20: '#108f22',
+
     primaryLight80: '#C5CFE4',
     primaryLight60: '#A196F6',
     primaryLight40: '#BDB6F7',
@@ -41,8 +47,13 @@ const themeFonts = {
   fontWeights: {
     semibold: 900,
     regular: 700,
-    light: 400
-  }
+    light: 500
+  },
+
+  fontSizes: {
+    sm: '0.75rem',
+    bg: '0.875rem',
+  },
 }
 
 export const darkTheme = {
