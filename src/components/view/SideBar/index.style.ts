@@ -32,11 +32,6 @@ export const SideBarViewStyle = styled.div`
 
   .cash-out-btn {
     height: 3.5rem;
-
-    & button {
-      background-color: ${(props) => (props.theme as CustomTheme).colors.btnCashOutColor};
-      border-radius: 0.25rem;
-    }
   }
 `;
 

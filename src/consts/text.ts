@@ -6,4 +6,5 @@ export const LABEL = {
   BTC: 'BTC',
   PICK: 'Pick random tile',
   CASHOUT: 'Cashout',
+  BET: 'Bet',
 }

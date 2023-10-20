@@ -8,13 +8,16 @@ import {
 
 type ButtonComponentProps = ButtonComponentStyleProps & {
   children: React.ReactNode;
+  onClick: () => void;
+  type: string;
 };
 
-export const ButtonComponent: React.FC<ButtonComponentProps> = ({
-  isDisable,
+export const ButtonComponent: React.FC<Partial<ButtonComponentProps>> = ({
   children,
+  ...props
 }) => {
   const buttonTextRef = useRef<HTMLButtonElement>(null);
+  const { isDisable, onClick, type } = { ...props };
 
   const handleMouseDown = () => {
     buttonTextRef.current?.classList.add("button-text-animation");
@@ -33,8 +36,12 @@ export const ButtonComponent: React.FC<ButtonComponentProps> = ({
       isDisable={isDisable}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onClick={onClick}
+      type={type}
     >
-      <ButtonText ref={buttonTextRef}>{children}</ButtonText>
+      <ButtonText ref={buttonTextRef} type={type}>
+        {children}
+      </ButtonText>
     </ButtonComponentStyle>
   );
 };

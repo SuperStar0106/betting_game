@@ -9,7 +9,9 @@ const themeColors = {
 
     textColor: '#b1bad3',
     btnClickBackColor: '#3d5564',
-    btnCashOutColor: '#108f22',
+    btnCashOutColor00: '#00e701',
+    btnCashOutColor10: '#1fff20',
+    btnCashOutColor20: '#108f22',
 
     primaryLight80: '#C5CFE4',
     primaryLight60: '#A196F6',

@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { InputWrapper, IconImage, StyledInput } from "./index.style";
 
 type InputComponentProps = {
-  isInput?: boolean;
+  isInput: boolean;
+  image: string;
 };
 
-export const InputComponent: React.FC<InputComponentProps> = (props) => {
-  const { isInput } = props;
+export const InputComponent: React.FC<Partial<InputComponentProps>> = (
+  props
+) => {
+  const { isInput, image } = props;
   const [value, setValue] = useState<string>("0.00");
-  const dollarImage = process.env.PUBLIC_URL + "dollar.png";
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -26,7 +28,7 @@ export const InputComponent: React.FC<InputComponentProps> = (props) => {
         isInput={isInput}
         disabled={isInput}
       />
-      <IconImage src={dollarImage} alt="dollar" />
+      <IconImage src={image} alt="dollar" />
     </InputWrapper>
   );
 };
