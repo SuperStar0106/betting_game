@@ -13,6 +13,10 @@ export const MainContainer = () => {
     dispatch(AppActions.game.setTableValues({ bombCount }));
   };
 
+  const handleEnd = () => {
+    dispatch(AppActions.game.removeTableValues());
+  };
+
   const handleAddOpenCards = (id: number) => {
     dispatch(AppActions.game.addOpenCards({ id }));
   };
@@ -21,15 +25,21 @@ export const MainContainer = () => {
     dispatch(AppActions.game.setBombExplostion());
   };
 
+  const setIsStart = () => {
+    dispatch(AppActions.game.setIsStart());
+  };
+
   return (
     <MainView
       isStart={isStart}
+      setIsStart={setIsStart}
       isBombExplosion={isBombExplosion}
       handleStart={handleStart}
       handleAddOpenCards={handleAddOpenCards}
       handleSetBombExplotion={handleSetBombExplotion}
       mines={mines}
       openCards={openCards}
+      handleEnd={handleEnd}
     />
   );
 };

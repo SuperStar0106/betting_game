@@ -25,6 +25,15 @@ const gameSlice = createSlice({
       const mines = GameUtil.makebombArray(action.payload.bombCount);
       state.mines = [...mines];
     },
+    removeTableValues(state: gameState) {
+      state.isStart = true;
+      state.mines = initialState.mines;
+      state.openCards = initialState.openCards;
+      state.isBombExplosion = initialState.isBombExplosion;
+    },
+    setIsStart(state: gameState) {
+      state.isStart = !state.isStart;
+    },
     addOpenCards(state: gameState, action: PayloadAction<AppActionTypes.Game.IAddOpenCardsAction>) {
       const id = action.payload.id;
       if (!state.openCards.includes(id)) {

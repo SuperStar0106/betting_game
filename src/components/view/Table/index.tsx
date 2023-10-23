@@ -8,6 +8,11 @@ type TableViewProps = {
   openCards: Array<number>;
   handleSetBombExplotion: () => void;
   handleAddOpenCards: (id: number) => void;
+  setTotalProfit: (totalProfit: number) => void;
+  totalProfit: number;
+  setSelectedNumbers: (selectedNumber: number[]) => void;
+  selectedNumbers: number[];
+  isShowResult: boolean;
 };
 
 export const TableView = (props: TableViewProps) => {
@@ -18,6 +23,11 @@ export const TableView = (props: TableViewProps) => {
     openCards,
     handleSetBombExplotion,
     handleAddOpenCards,
+    setTotalProfit,
+    totalProfit,
+    setSelectedNumbers,
+    selectedNumbers,
+    isShowResult,
   } = props;
   const rows = 5;
   const cols = 5;
@@ -34,7 +44,11 @@ export const TableView = (props: TableViewProps) => {
             openCards={openCards}
             handleSetBombExplotion={handleSetBombExplotion}
             handleAddOpenCards={handleAddOpenCards}
+            setTotalProfit={setTotalProfit}
+            totalProfit={totalProfit}
             cardId={i}
+            setSelectedNumbers={setSelectedNumbers}
+            selectedNumbers={selectedNumbers}
           />
         </div>
       );

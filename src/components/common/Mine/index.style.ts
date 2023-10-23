@@ -12,16 +12,15 @@ const scaleAnimation = keyframes<MineComponentStyleProps>`
     transform: scale(1);
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
   }
-  25% {
+  30% {
     transform: scale(1.1);
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
   }
-  50% {
-    transform: scale(0);
-    background-color: transparent;
+  70% {
+    transform: scale(1);
   }
-  75% {
-    transform: scale(1.1);
+  90% {
+    transform: scale(0);
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
   }
   100% {
@@ -33,9 +32,24 @@ const scaleAnimation = keyframes<MineComponentStyleProps>`
     box-shadow: none;
     border-radius: 0.5rem;
   }
+  @keyframes hideImage {
+    0%, 30% {
+      display: none;
+    }
+  }
+`;
+
+const initialAnimation = keyframes`
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 `;
 
 export const MineComponentStyle = styled.button<MineComponentStyleProps>`
+  // animation: ${initialAnimation} 0.2s forwards;
   display: flex;
   position: relative;
   align-items: center;
@@ -57,8 +71,11 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
 
   &:hover {
     transform: translateY(-0.15em);
-    transition-duration: 0.2s;
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary20};
+    background-color: ${(props) => (props.theme as CustomTheme).colors.primary20};    
+  }
+
+  &:active {
+    transform: none;
   }
 
   &.clicked {
@@ -67,13 +84,17 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   &.explosion {
-    & > .back-img {
-      transform: ${(props) => !props.isBombExplosion ? 'scale(0.7)' : 'scale(1)'};
-      opacity: ${(props) => !props.isBombExplosion ? '0.5' : '1'};
+    animation: ${initialAnimation} 0.2s forwards;
+    background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+    box-shadow: none;
 
-      &.explosion {
-        display: ${(props) => !props.isBombExplosion ? 'none' : 'flex'};
-      }
+    & > .explosion {
+      display: none;
+    }
+
+    & > .back-img {
+      opacity: 0.5;
+      transform: scale(0.7);
     }
   }
 
@@ -111,6 +132,7 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   & > .back-img {
+    animation: hideImage linear infinite;
     display: ${(props) => !props.isShowImg && 'none'};
     position: absolute;
     width: 5rem;

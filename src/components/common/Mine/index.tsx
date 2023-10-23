@@ -9,6 +9,10 @@ type MineComponentProps = {
   handleAddOpenCards: (id: number) => void;
   cardId: number;
   openCards: Array<number>;
+  setTotalProfit: (totalProfit: number) => void;
+  totalProfit: number;
+  setSelectedNumbers: (selectedNumber: number[]) => void;
+  selectedNumbers: number[];
 };
 
 export const MineComponent: React.FC<MineComponentProps> = (props) => {
@@ -18,75 +22,69 @@ export const MineComponent: React.FC<MineComponentProps> = (props) => {
     isBombExplosion,
     handleSetBombExplotion,
     handleAddOpenCards,
+    setTotalProfit,
     cardId,
     openCards,
+    totalProfit,
+    setSelectedNumbers,
+    selectedNumbers,
   } = props;
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [clickCount, setClickCount] = useState<number>(0);
-  const [isRelease, setIsRelease] = useState<boolean>(false);
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
   const img = isBomb ? "bomb.svg" : "jewel.svg";
 
   const handleMouseUp = () => {
-    isBettingStart && isBomb && handleSetBombExplotion();
-    isBettingStart && setClickCount((prevCount) => prevCount + 1);
-    setIsRelease(true);
-    isBettingStart &&
-      buttonRef.current?.classList.remove("clicked-release", "clicked");
-    isBettingStart && handleAddOpenCards(cardId);
+    if (isBettingStart) {
+      setIsOpen(true);
+      setSelectedNumbers([...selectedNumbers, cardId]);
+      !buttonRef.current?.classList.contains("explosion") &&
+        setIsSelected(true);
+      isBomb && handleSetBombExplotion();
+      buttonRef.current?.classList.remove("clicked-after");
+    }
   };
+
+  useEffect(() => {
+    console.log("isBettingStart: ", isBettingStart);
+    isBettingStart && setIsOpen(false);
+  }, [isBettingStart]);
 
   const handleMouseDown = () => {
-    setIsRelease(false);
-    if (!isBettingStart) {
-      buttonRef.current?.classList.add("clicked-release");
-    }
-
-    if (clickCount === 1 && isRelease) {
-      setClickCount((prevCount) => prevCount + 1);
-    }
-    buttonRef.current?.classList.remove("clicked");
-  };
-
-  const handleMouseOverLeave = () => {
-    buttonRef.current?.classList.remove("clicked-release");
+    !isBettingStart && buttonRef.current?.classList.add("hover-click");
+    isOpen && isSelected && buttonRef.current?.classList.add("clicked-after");
   };
 
   useEffect(() => {
-    buttonRef.current?.classList.remove(
-      "clicked-after",
-      "clicked",
-      "clicked-after-release"
-    );
+    if (isBombExplosion && !isOpen) {
+      buttonRef.current?.classList.add("explosion");
+    }
+  }, [isBombExplosion, isOpen]);
 
-    if (clickCount === 1 && isBettingStart) {
-      buttonRef.current?.classList.add("clicked");
-      isBombExplosion && buttonRef.current?.classList.add("explosion");
-    } else if (clickCount > 1 && !isRelease) {
-      if (isBettingStart) {
-        buttonRef.current?.classList.add("clicked-after");
-      } else {
-        buttonRef.current?.classList.add("clicked-release");
+  useEffect(() => {
+    if (selectedNumbers.includes(cardId)) {
+      setIsOpen(true);
+      if (isBomb) {
+        setTimeout(() => {
+          handleSetBombExplotion();
+        }, 1);
       }
-    } else if (clickCount > 1 && isRelease && isBettingStart) {
-      buttonRef.current?.classList.add("clicked-after-release");
     }
-  }, [clickCount, isRelease, isBettingStart]);
+  }, [selectedNumbers]);
 
   useEffect(() => {
-    isBettingStart && setClickCount((prevCount) => prevCount + 1);
-  }, [isBombExplosion]);
+    isOpen && buttonRef.current?.classList.add("clicked");
+  }, [isOpen]);
 
   return (
     <MineComponentStyle
       ref={buttonRef}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      onMouseOver={handleMouseOverLeave}
-      onMouseLeave={handleMouseOverLeave}
       isBomb={true}
-      isShowImg={clickCount !== 0 && isBettingStart}
-      isBombExplosion={isBombExplosion && openCards.includes(cardId)}
+      isShowImg={isOpen || isBombExplosion}
+      isBombExplosion={isSelected}
     >
       {isBomb && (
         <img src="explosion.gif" alt="" className="back-img explosion" />

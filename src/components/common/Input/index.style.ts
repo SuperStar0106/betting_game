@@ -34,6 +34,8 @@ export const StyledInput = styled.input<StyledInputProps>`
   border-width: 2px;
   border-bottom-left-radius: 0.25rem;
   border-top-left-radius: 0.25rem;
+  background-color: ${(props) => props.isInput ? (props.theme as CustomTheme).colors.primary60 : (props.theme as CustomTheme).colors.primary80};
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 2px 0 rgba(0,0,0,.12);
   
   border-bottom-right-radius: ${(props) =>
     props.isInput ? '0.25rem' : '0rem'
@@ -41,8 +43,6 @@ export const StyledInput = styled.input<StyledInputProps>`
   border-top-right-radius: ${(props) =>
     props.isInput ? '0.25rem' : '0rem'
   };
-  background-color: ${(props) => props.isInput ? (props.theme as CustomTheme).colors.primary60 : (props.theme as CustomTheme).colors.primary80};
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 2px 0 rgba(0,0,0,.12);
   color: ${(props) =>
     props.isInput
       ? (props.theme as CustomTheme).colors.white

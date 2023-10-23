@@ -7,7 +7,7 @@ export const TableViewStyle = styled.div<TableViewStyleProps>`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    gap: 0.5rem;
+    gap: 0.7rem;
   }
 
   .cell {
