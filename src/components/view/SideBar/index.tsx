@@ -68,13 +68,17 @@ export const SideBarView = (props: SideBarViewProps) => {
 
   useEffect(() => {
     setTotalBtcAmount(totalProfit * btcAmount);
+    console.log("totalProfit: ", totalProfit);
+    console.log("btcAmount: ", btcAmount);
   }, [btcAmount, totalProfit]);
 
   return (
     <SideBarViewStyle>
       <InputLabel>
         <label className="font-bg">{TEXT.LABEL.BET_AMOUNT}</label>
-        <label className="font-sm">{TEXT.LABEL.BTC + " " + btcAmount}</label>
+        <label className="font-sm">
+          {TEXT.LABEL.BTC + " " + btcAmount.toFixed(8)}
+        </label>
       </InputLabel>
       <BetAmount>
         <InputComponent

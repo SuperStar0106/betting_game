@@ -38,16 +38,15 @@ export const MineComponent: React.FC<MineComponentProps> = (props) => {
   const handleMouseUp = () => {
     if (isBettingStart) {
       setIsOpen(true);
+      !isOpen && setTotalProfit(totalProfit + 1);
       setSelectedNumbers([...selectedNumbers, cardId]);
       !buttonRef.current?.classList.contains("explosion") &&
         setIsSelected(true);
       isBomb && handleSetBombExplotion();
-      buttonRef.current?.classList.remove("clicked-after");
     }
   };
 
   useEffect(() => {
-    console.log("isBettingStart: ", isBettingStart);
     isBettingStart && setIsOpen(false);
   }, [isBettingStart]);
 
@@ -58,17 +57,21 @@ export const MineComponent: React.FC<MineComponentProps> = (props) => {
 
   useEffect(() => {
     if (isBombExplosion && !isOpen) {
+      buttonRef.current?.classList.remove("clicked-after");
+      buttonRef.current?.classList.remove("hover-click");
+      buttonRef.current?.classList.remove("clicked");
       buttonRef.current?.classList.add("explosion");
     }
   }, [isBombExplosion, isOpen]);
 
   useEffect(() => {
     if (selectedNumbers.includes(cardId)) {
-      setIsOpen(true);
+      // setIsOpen(true);
+      selectedNumbers && handleMouseUp();
       if (isBomb) {
         setTimeout(() => {
           handleSetBombExplotion();
-        }, 1);
+        }, 0.2);
       }
     }
   }, [selectedNumbers]);

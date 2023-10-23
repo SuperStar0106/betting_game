@@ -7,37 +7,34 @@ type MineComponentStyleProps = {
   isBombExplosion: boolean;
 };
 
-const scaleAnimation = keyframes<MineComponentStyleProps>`
-  0% {
-    transform: scale(1);
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
-  }
-  30% {
-    transform: scale(1.1);
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
-  }
-  70% {
-    transform: scale(1);
-  }
-  90% {
-    transform: scale(0);
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-  }
-  100% {
-    transform: scale(1);
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-    background-size: 5rem, 10rem;
-    background-repeat: no-repeat, no-repeat;
-    background-position: center, center;
-    box-shadow: none;
-    border-radius: 0.5rem;
-  }
-  @keyframes hideImage {
-    0%, 30% {
-      display: none;
-    }
-  }
-`;
+// const scaleAnimation = keyframes<MineComponentStyleProps>`
+//   0% {
+//     transform: scale(1);
+//     // background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
+//     background-color: ${(props) => (props.theme as CustomTheme).colors.white};
+//   }
+//   30% {
+//     transform: scale(1.1);
+//     // background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
+//     background-color: ${(props) => (props.theme as CustomTheme).colors.white};
+//   }
+//   70% {
+//     transform: scale(1);
+//   }
+//   90% {
+//     transform: scale(0);
+//     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+//   }
+//   100% {
+//     transform: scale(1);
+//     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+//     background-size: 5rem, 10rem;
+//     background-repeat: no-repeat, no-repeat;
+//     background-position: center, center;
+//     box-shadow: none;
+//     border-radius: 0.5rem;
+//   }
+// `;
 
 const initialAnimation = keyframes`
   0% {
@@ -49,7 +46,7 @@ const initialAnimation = keyframes`
 `;
 
 export const MineComponentStyle = styled.button<MineComponentStyleProps>`
-  // animation: ${initialAnimation} 0.2s forwards;
+  animation: ${initialAnimation} 0.2s forwards;
   display: flex;
   position: relative;
   align-items: center;
@@ -79,8 +76,35 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   &.clicked {
-    animation: ${scaleAnimation} 1.0s forwards;
+    animation: scaleAnimation 1.0s forwards;
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+
+    @keyframes scaleAnimation {
+      0% {
+        transform: scale(1);
+        background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
+      }
+      30% {
+        transform: scale(1.1);
+        background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
+      }
+      70% {
+        transform: scale(1);
+      }
+      90% {
+        transform: scale(0);
+        background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+      }
+      100% {
+        transform: scale(1);
+        background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+        background-size: 5rem, 10rem;
+        background-repeat: no-repeat, no-repeat;
+        background-position: center, center;
+        box-shadow: none;
+        border-radius: 0.5rem;
+      }
+    }
   }
 
   &.explosion {
@@ -95,23 +119,6 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
     & > .back-img {
       opacity: 0.5;
       transform: scale(0.7);
-    }
-  }
-
-  &.clicked-after {
-    transform: scale(1);
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-    background-size: 4.5rem;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: none;
-    border-radius: 0.5rem;
-
-    & > .back-img {
-      &.back-main {
-        transform: scale(0.9);
-        transition-duration: 0.2s;
-      }
     }
   }
 
@@ -132,11 +139,30 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   & > .back-img {
-    animation: hideImage linear infinite;
+    // visibility: hidden;
     display: ${(props) => !props.isShowImg && 'none'};
+    animation: ${(props) => props.isBombExplosion ? 'item-click 1s forwards' : 'none'};
+
     position: absolute;
     width: 5rem;
     height: 5rem;
+
+    @keyframes item-click {
+      0% {
+        visibility: hidden;
+        transform: none;
+      }
+      90% {
+        visibility: hidden;
+        transform: scale(0);
+      }
+      91% {
+        visibility: visible;
+      }
+      100% {
+        visibility: visible;
+      }
+    }
 
     &.explosion {
       width: 10rem;
