@@ -1,30 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { InputWrapper, IconImage, StyledInput } from "./index.style";
 
 type InputComponentProps = {
   isInput: boolean;
   image: string;
+  inputValue: number;
+  setInputValue: (inputValue: number) => void;
+  setBtcAmount?: (btcAmount: number) => void;
 };
 
 export const InputComponent: React.FC<Partial<InputComponentProps>> = (
   props
 ) => {
-  const { isInput, image } = props;
-  const [value, setValue] = useState<string>("0.00");
+  const { isInput, image, inputValue, setBtcAmount, setInputValue } = props;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    setInputValue && setInputValue(Number(event.target.value));
+    if (event.target && event.target.value && setBtcAmount) {
+      const inputValue = event.target.value;
+      const calculatedValue = Number(inputValue) * 0.000048;
+      const formattedValue = Number(calculatedValue.toFixed(8));
+      setBtcAmount(formattedValue);
+    }
   };
+
+  useEffect(() => {
+    const calculatedValue = Number(inputValue) * 0.000048;
+    const formattedValue = Number(calculatedValue.toFixed(8));
+    setBtcAmount && setBtcAmount(formattedValue);
+  }, [inputValue]);
 
   return (
     <InputWrapper>
       <StyledInput
-        type={isInput ? "text" : "number"}
-        value={value}
+        type="number"
+        defaultValue="0.00"
+        value={inputValue?.toFixed(2)}
         onChange={handleInputChange}
         min="0"
         step="0.01"
-        pattern="^\d+(?:\.\d{1,2})?$"
+        pattern="[0-9]*(\.[0-9]{0,2})?"
+        inputMode="decimal"
         isInput={isInput}
         disabled={isInput}
       />

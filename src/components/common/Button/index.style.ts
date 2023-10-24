@@ -23,6 +23,9 @@ export const ButtonComponentStyle = styled.button<Partial<ButtonComponentStylePr
   border: none;
   transition-duration: 0.2s;
   padding: 0.625rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  font-size: ${(props) => (props.theme as CustomTheme).fontSizes.bg};
 
   &:hover {
     background-color: ${(props) =>

@@ -4,73 +4,89 @@ import { MineComponentStyle } from "./index.style";
 type MineComponentProps = {
   isBettingStart: boolean;
   isBomb: boolean;
+  isBombExplosion: boolean;
+  cardId: number;
+  openCards: Array<number>;
+  totalProfit: number;
+  selectedNumbers: number[];
+  setTotalProfit: (totalProfit: number) => void;
+  setSelectedNumbers: (selectedNumber: number[]) => void;
+  handleSetBombExplotion: () => void;
+  handleAddOpenCards: (id: number) => void;
 };
 
-export const MineComponent: React.FC<MineComponentProps> = ({
-  isBettingStart,
-  isBomb,
-}) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [clickCount, setClickCount] = useState<number>(0);
-  const [isRelease, setIsRelease] = useState<boolean>(false);
+export const MineComponent: React.FC<MineComponentProps> = (props) => {
+  const {
+    isBettingStart,
+    isBomb,
+    isBombExplosion,
+    cardId,
+    openCards,
+    totalProfit,
+    selectedNumbers,
+    setSelectedNumbers,
+    handleSetBombExplotion,
+    handleAddOpenCards,
+    setTotalProfit,
+  } = props;
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isSelected, setIsSelected] = useState<boolean>(false);
   const img = isBomb ? "bomb.svg" : "jewel.svg";
 
   const handleMouseUp = () => {
-    setClickCount((prevCount) => prevCount + 1);
-    setIsRelease(true);
-    buttonRef.current?.classList.remove("clicked-release", "clicked");
+    if (isBettingStart) {
+      !isBombExplosion && setIsOpen(true);
+      !isBombExplosion && !isOpen && setTotalProfit(totalProfit + 1);
+      setSelectedNumbers([...selectedNumbers, cardId]);
+      isBomb && handleSetBombExplotion();
+    }
   };
 
   const handleMouseDown = () => {
-    setIsRelease(false);
-    if (!isBettingStart) {
-      buttonRef.current?.classList.add("clicked-release");
-    }
-
-    if (clickCount === 1 && isRelease) {
-      setClickCount((prevCount) => prevCount + 1);
-    }
-    buttonRef.current?.classList.remove("clicked");
-  };
-
-  const handleMouseOverLeave = () => {
-    buttonRef.current?.classList.remove("clicked-release");
+    !isBettingStart && buttonRef.current?.classList.add("hover-click");
+    isOpen && buttonRef.current?.classList.add("after-click");
   };
 
   useEffect(() => {
-    buttonRef.current?.classList.remove(
-      "clicked-after",
-      "clicked",
-      "clicked-after-release"
-    );
-
-    if (clickCount === 1 && isBettingStart) {
-      buttonRef.current?.classList.add("clicked");
-    } else if (clickCount > 1 && !isRelease) {
-      if (isBettingStart) {
-        buttonRef.current?.classList.add("clicked-after");
-      } else {
-        buttonRef.current?.classList.add("clicked-release");
-      }
-    } else if (clickCount > 1 && isRelease && isBettingStart) {
-      buttonRef.current?.classList.add("clicked-after-release");
+    if (selectedNumbers.includes(cardId)) {
+      !isBombExplosion && handleMouseUp();
     }
+  }, [selectedNumbers]);
 
-    console.log("classList: ", buttonRef.current?.classList);
-    console.log("clickCount: ", clickCount);
-    console.log("isRelease: ", isRelease);
-  }, [clickCount, isRelease, isBettingStart]);
+  useEffect(() => {
+    console.log("isBombExplosion: ", isBombExplosion);
+    if (!isOpen && isBombExplosion) {
+      buttonRef.current?.classList.add("explosion");
+    }
+    if (isOpen && isBombExplosion) {
+      buttonRef.current?.classList.remove("clicked");
+      buttonRef.current?.classList.add("bomb-effect");
+    }
+  }, [isBombExplosion, isOpen]);
+
+  useEffect(() => {
+    isBettingStart && setIsOpen(false);
+  }, [isBettingStart]);
+
+  useEffect(() => {
+    console.log(buttonRef.current?.classList);
+  }, [buttonRef.current?.classList.length]);
+
+  useEffect(() => {
+    !isBombExplosion && isOpen && buttonRef.current?.classList.add("clicked");
+  }, [isOpen]);
 
   return (
     <MineComponentStyle
       ref={buttonRef}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      onMouseOver={handleMouseOverLeave}
-      onMouseLeave={handleMouseOverLeave}
       isBomb={true}
-      isShowImg={clickCount !== 0 && isBettingStart}
+      isShowImg={isOpen || isBombExplosion}
+      isEffectExplosion={!isOpen && isBombExplosion}
+      isBombExplosion={isBombExplosion}
     >
       {isBomb && (
         <img src="explosion.gif" alt="" className="back-img explosion" />

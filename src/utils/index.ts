@@ -1,0 +1,1 @@
+export * as GameUtil from './game.instance';
