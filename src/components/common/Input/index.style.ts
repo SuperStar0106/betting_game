@@ -28,7 +28,10 @@ export const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
   padding: 0.625rem;
   padding-right: 2.4rem;
-  font-size: 16px;
+  font-weight: ${(props) => (props.theme as CustomTheme).fontWeights.light};
+  font-size: ${(props) => (props.theme as CustomTheme).fontSizes.bg};
+  font-family: inherit;
+  line-height: 1.25rem;
   border: 1px solid;
   border-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
   border-width: 2px;
@@ -36,7 +39,7 @@ export const StyledInput = styled.input<StyledInputProps>`
   border-top-left-radius: 0.25rem;
   background-color: ${(props) => props.isInput ? (props.theme as CustomTheme).colors.primary60 : (props.theme as CustomTheme).colors.primary80};
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 2px 0 rgba(0,0,0,.12);
-  
+
   border-bottom-right-radius: ${(props) =>
     props.isInput ? '0.25rem' : '0rem'
   };

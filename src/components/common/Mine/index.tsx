@@ -5,14 +5,14 @@ type MineComponentProps = {
   isBettingStart: boolean;
   isBomb: boolean;
   isBombExplosion: boolean;
-  handleSetBombExplotion: () => void;
-  handleAddOpenCards: (id: number) => void;
   cardId: number;
   openCards: Array<number>;
-  setTotalProfit: (totalProfit: number) => void;
   totalProfit: number;
-  setSelectedNumbers: (selectedNumber: number[]) => void;
   selectedNumbers: number[];
+  setTotalProfit: (totalProfit: number) => void;
+  setSelectedNumbers: (selectedNumber: number[]) => void;
+  handleSetBombExplotion: () => void;
+  handleAddOpenCards: (id: number) => void;
 };
 
 export const MineComponent: React.FC<MineComponentProps> = (props) => {
@@ -20,14 +20,14 @@ export const MineComponent: React.FC<MineComponentProps> = (props) => {
     isBettingStart,
     isBomb,
     isBombExplosion,
-    handleSetBombExplotion,
-    handleAddOpenCards,
-    setTotalProfit,
     cardId,
     openCards,
     totalProfit,
-    setSelectedNumbers,
     selectedNumbers,
+    setSelectedNumbers,
+    handleSetBombExplotion,
+    handleAddOpenCards,
+    setTotalProfit,
   } = props;
 
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -37,47 +37,45 @@ export const MineComponent: React.FC<MineComponentProps> = (props) => {
 
   const handleMouseUp = () => {
     if (isBettingStart) {
-      setIsOpen(true);
-      !isOpen && setTotalProfit(totalProfit + 1);
+      !isBombExplosion && setIsOpen(true);
+      !isBombExplosion && !isOpen && setTotalProfit(totalProfit + 1);
       setSelectedNumbers([...selectedNumbers, cardId]);
-      !buttonRef.current?.classList.contains("explosion") &&
-        setIsSelected(true);
       isBomb && handleSetBombExplotion();
     }
   };
+
+  const handleMouseDown = () => {
+    !isBettingStart && buttonRef.current?.classList.add("hover-click");
+    isOpen && buttonRef.current?.classList.add("after-click");
+  };
+
+  useEffect(() => {
+    if (selectedNumbers.includes(cardId)) {
+      !isBombExplosion && handleMouseUp();
+    }
+  }, [selectedNumbers]);
+
+  useEffect(() => {
+    console.log("isBombExplosion: ", isBombExplosion);
+    if (!isOpen && isBombExplosion) {
+      buttonRef.current?.classList.add("explosion");
+    }
+    if (isOpen && isBombExplosion) {
+      buttonRef.current?.classList.remove("clicked");
+      buttonRef.current?.classList.add("bomb-effect");
+    }
+  }, [isBombExplosion, isOpen]);
 
   useEffect(() => {
     isBettingStart && setIsOpen(false);
   }, [isBettingStart]);
 
-  const handleMouseDown = () => {
-    !isBettingStart && buttonRef.current?.classList.add("hover-click");
-    isOpen && isSelected && buttonRef.current?.classList.add("clicked-after");
-  };
+  useEffect(() => {
+    console.log(buttonRef.current?.classList);
+  }, [buttonRef.current?.classList.length]);
 
   useEffect(() => {
-    if (isBombExplosion && !isOpen) {
-      buttonRef.current?.classList.remove("clicked-after");
-      buttonRef.current?.classList.remove("hover-click");
-      buttonRef.current?.classList.remove("clicked");
-      buttonRef.current?.classList.add("explosion");
-    }
-  }, [isBombExplosion, isOpen]);
-
-  useEffect(() => {
-    if (selectedNumbers.includes(cardId)) {
-      // setIsOpen(true);
-      selectedNumbers && handleMouseUp();
-      if (isBomb) {
-        setTimeout(() => {
-          handleSetBombExplotion();
-        }, 0.2);
-      }
-    }
-  }, [selectedNumbers]);
-
-  useEffect(() => {
-    isOpen && buttonRef.current?.classList.add("clicked");
+    !isBombExplosion && isOpen && buttonRef.current?.classList.add("clicked");
   }, [isOpen]);
 
   return (
@@ -87,7 +85,8 @@ export const MineComponent: React.FC<MineComponentProps> = (props) => {
       onMouseUp={handleMouseUp}
       isBomb={true}
       isShowImg={isOpen || isBombExplosion}
-      isBombExplosion={isSelected}
+      isEffectExplosion={!isOpen && isBombExplosion}
+      isBombExplosion={isBombExplosion}
     >
       {isBomb && (
         <img src="explosion.gif" alt="" className="back-img explosion" />

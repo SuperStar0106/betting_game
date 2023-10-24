@@ -8,9 +8,9 @@ import {
 
 type ButtonComponentProps = ButtonComponentStyleProps & {
   children: React.ReactNode;
-  onClick: () => void;
   type: string;
   isDisable?: boolean;
+  onClick: () => void;
 };
 
 export const ButtonComponent: React.FC<Partial<ButtonComponentProps>> = ({

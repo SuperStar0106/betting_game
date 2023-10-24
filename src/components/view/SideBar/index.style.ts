@@ -8,6 +8,7 @@ export const SideBarViewStyle = styled.div`
   font-size: ${(props) => (props.theme as CustomTheme).fontSizes.bg};
   line-height: 1.25rem;
   font-weight: ${(props) => (props.theme as CustomTheme).fontWeights.light};
+  font-size: ${(props) => (props.theme as CustomTheme).fontSizes.bg};
   padding: 0.75rem;
   color: ${(props) => (props.theme as CustomTheme).colors.textColor};
 

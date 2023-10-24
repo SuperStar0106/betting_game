@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MainView } from "../../components/view";
 import { AppDispatch, AppActions, RootState } from "../../redux/store";

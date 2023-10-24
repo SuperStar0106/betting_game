@@ -5,36 +5,8 @@ type MineComponentStyleProps = {
   isBomb: boolean;
   isShowImg: boolean;
   isBombExplosion: boolean;
+  isEffectExplosion: boolean;
 };
-
-// const scaleAnimation = keyframes<MineComponentStyleProps>`
-//   0% {
-//     transform: scale(1);
-//     // background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
-//     background-color: ${(props) => (props.theme as CustomTheme).colors.white};
-//   }
-//   30% {
-//     transform: scale(1.1);
-//     // background-color: ${(props) => (props.theme as CustomTheme).colors.primary60};
-//     background-color: ${(props) => (props.theme as CustomTheme).colors.white};
-//   }
-//   70% {
-//     transform: scale(1);
-//   }
-//   90% {
-//     transform: scale(0);
-//     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-//   }
-//   100% {
-//     transform: scale(1);
-//     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
-//     background-size: 5rem, 10rem;
-//     background-repeat: no-repeat, no-repeat;
-//     background-position: center, center;
-//     box-shadow: none;
-//     border-radius: 0.5rem;
-//   }
-// `;
 
 const initialAnimation = keyframes`
   0% {
@@ -67,8 +39,18 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   box-sizing: border-box;
 
   &:hover {
-    transform: translateY(-0.15em);
-    background-color: ${(props) => (props.theme as CustomTheme).colors.primary20};    
+    transform: ${(props) => props.isShowImg && 'translateY(-0.15em)'};
+    // transition-duration: 0.2s;
+    // background-color: ${(props) => (props.theme as CustomTheme).colors.primary20};
+  }
+
+  &.bomb-effect {
+    box-shadow: none;
+    background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
+
+    & > .back-img {
+      animation: none;
+    }
   }
 
   &:active {
@@ -76,7 +58,7 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   &.clicked {
-    animation: scaleAnimation 1.0s forwards;
+    animation: scaleAnimation 1s forwards;
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
 
     @keyframes scaleAnimation {
@@ -108,7 +90,6 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   &.explosion {
-    animation: ${initialAnimation} 0.2s forwards;
     background-color: ${(props) => (props.theme as CustomTheme).colors.primary00};
     box-shadow: none;
 
@@ -117,8 +98,25 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
     }
 
     & > .back-img {
+      animation: not-open-item 0.2s forwards;
+      animation-delay: 0.2s;
       opacity: 0.5;
-      transform: scale(0.7);
+      transform: scale(0);
+
+      @keyframes not-open-item {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(0.7);
+        }
+      }
+    }
+  }
+
+  &.after-click:active {
+    & > .back-img {
+      transform: scale(0.9);
     }
   }
 
@@ -139,9 +137,8 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
   }
 
   & > .back-img {
-    // visibility: hidden;
     display: ${(props) => !props.isShowImg && 'none'};
-    animation: ${(props) => props.isBombExplosion ? 'item-click 1s forwards' : 'none'};
+    animation: ${(props) => !props.isEffectExplosion && 'item-click 1s forwards'};
 
     position: absolute;
     width: 5rem;

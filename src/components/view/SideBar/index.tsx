@@ -9,10 +9,10 @@ import { InputComponent, ButtonComponent, SelectComponent } from "../../common";
 import { TEXT, IMAGE } from "../../../consts";
 
 type SideBarViewProps = {
-  handleStart: (bombCount: number) => void;
   isStart: boolean;
   totalProfit: number;
   selectedNumbers: number[];
+  handleStart: (bombCount: number) => void;
   setSelectedNumbers: (selectedNumbers: number[]) => void;
   handleEnd: () => void;
   handleShowResult: (isShow: boolean, totalResult: number) => void;

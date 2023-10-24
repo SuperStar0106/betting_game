@@ -4,9 +4,9 @@ import { InputWrapper, IconImage, StyledInput } from "./index.style";
 type InputComponentProps = {
   isInput: boolean;
   image: string;
-  setBtcAmount?: (btcAmount: number) => void;
   inputValue: number;
   setInputValue: (inputValue: number) => void;
+  setBtcAmount?: (btcAmount: number) => void;
 };
 
 export const InputComponent: React.FC<Partial<InputComponentProps>> = (

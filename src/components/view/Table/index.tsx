@@ -6,13 +6,13 @@ type TableViewProps = {
   isBettingStart: boolean;
   isBombExplosion: boolean;
   openCards: Array<number>;
+  totalProfit: number;
+  selectedNumbers: number[];
+  isShowResult: boolean;
+  setSelectedNumbers: (selectedNumber: number[]) => void;
   handleSetBombExplotion: () => void;
   handleAddOpenCards: (id: number) => void;
   setTotalProfit: (totalProfit: number) => void;
-  totalProfit: number;
-  setSelectedNumbers: (selectedNumber: number[]) => void;
-  selectedNumbers: number[];
-  isShowResult: boolean;
 };
 
 export const TableView = (props: TableViewProps) => {
@@ -21,13 +21,13 @@ export const TableView = (props: TableViewProps) => {
     isBombExplosion,
     mines,
     openCards,
+    totalProfit,
+    selectedNumbers,
+    isShowResult,
+    setSelectedNumbers,
     handleSetBombExplotion,
     handleAddOpenCards,
     setTotalProfit,
-    totalProfit,
-    setSelectedNumbers,
-    selectedNumbers,
-    isShowResult,
   } = props;
   const rows = 5;
   const cols = 5;
