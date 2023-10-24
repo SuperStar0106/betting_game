@@ -40,8 +40,8 @@ export const MineComponentStyle = styled.button<MineComponentStyleProps>`
 
   &:hover {
     transform: ${(props) => props.isShowImg && 'translateY(-0.15em)'};
-    // transition-duration: 0.2s;
-    // background-color: ${(props) => (props.theme as CustomTheme).colors.primary20};
+    transition-duration: 0.2s;
+    background-color: ${(props) => (props.theme as CustomTheme).colors.primary20};
   }
 
   &.bomb-effect {
